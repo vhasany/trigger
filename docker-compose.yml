@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    hostname: rabbitmq
+    restart: unless-stopped
+    expose:
+      - 5672
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 5s
+      timeout: 15s
+      retries: 1
+
+  trigger:
+    build: .
+    image: trigger:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    depends_on:
+      - rabbitmq
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+
