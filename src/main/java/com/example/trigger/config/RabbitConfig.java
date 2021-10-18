@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
     @Value("${trigger.exchange}")
-    String txTrigger;
+    String dxTrigger;
     @Value("${trigger.queue}")
     String qTrigger;
     @Value("${trigger.routingKey}")
@@ -25,7 +25,7 @@ public class RabbitConfig {
 
     @Bean
     DirectExchange exchange() {
-        return new DirectExchange(txTrigger);
+        return new DirectExchange(dxTrigger);
     }
 
     @Bean
